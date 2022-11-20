@@ -1,7 +1,7 @@
 [#ftl]
 [@c.page]
     <div class="detail">
-        [@form.form class="vizitka" bind="vizitka" method="post" action="/nova"]
+        [@form.form class="vizitka" novalidate="novalidate" bind="vizitka" method="post" action="/nova"]
             [@form.input name="celeJmeno" label="Jméno" maxlength="100" required="required" /]
             [@form.input name="firma" label="Firma" maxlength="100" required="required" /]
             [@form.input name="ulice" label="Ulice a čísla" maxlength="100" required="required" /]
