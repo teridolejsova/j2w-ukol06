@@ -1,7 +1,8 @@
 [#ftl]
 [@c.page]
     <div class="detail">
-        [@form.form class="vizitka" novalidate="novalidate" bind="vizitka" method="post" action="/nova"]
+        [@form.form class="vizitka" novalidate="novalidate" bind="vizitka" method="post" action="${nova?then('/nova','/upravit')}"]
+            [@form.input name="id" type="hidden" label=""/]
             [@form.input name="celeJmeno" label="Jméno" maxlength="100" required="required" /]
             [@form.input name="firma" label="Firma" maxlength="100" required="required" /]
             [@form.input name="ulice" label="Ulice a čísla" maxlength="100" required="required" /]
@@ -11,8 +12,14 @@
             [@form.input name="telefon" label="Telefon *" maxlength="100" required="required" type="tel" /]
             [@form.input name="web" label="Web *" maxlength="100" required="required" type="url" /]
             <div class="form-controls">
+                [#if nova]
                 <button type="submit">Odeslat</button>
+                [#else ]
+                <button type="submit">Potvrdit změny</button>
+                [/#if]
+
             </div>
+
         [/@form.form]
 
         [@c.back /]

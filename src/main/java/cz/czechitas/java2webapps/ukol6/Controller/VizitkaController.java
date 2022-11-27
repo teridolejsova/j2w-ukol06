@@ -47,18 +47,42 @@ public class VizitkaController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping("/nova")
-    public ModelAndView nova (){
+    public ModelAndView nova() {
         ModelAndView nova = new ModelAndView("formular")
-                .addObject("vizitka",new Vizitka());
+                .addObject("vizitka", new Vizitka())
+                .addObject("nova", true);
         return nova;
     }
+
     @PostMapping("/nova")
-    public String nova (@Valid @ModelAttribute ("vizitka") Vizitka vizitka , BindingResult bindingResult){
-        if(bindingResult.hasErrors()) {
+    public String nova(@Valid @ModelAttribute("vizitka") Vizitka vizitka, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "formular";
         }
         vizitkaRepository.save(vizitka);
         return "redirect:/";
     }
+
+    @PostMapping("/smazat")
+    public String smazat(int id) {
+        vizitkaRepository.deleteById(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/upravit")
+    public ModelAndView upravit(int id) {
+        ModelAndView modelAndView = new ModelAndView("/formular")
+                .addObject("vizitka", vizitkaRepository.findById(id).get())
+                .addObject("nova", false);
+        return modelAndView;
+    }
+
+    @PostMapping("/upravit")
+    public String ulozitUpravy(@Valid @ModelAttribute("vizitka") Vizitka vizitka, BindingResult bindingResult){
+            return nova(vizitka, bindingResult);
+    }
+
+
 }
